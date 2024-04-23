@@ -1,53 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Password Change Form</title>
 </head>
+
 <body>
-    <form id="loginForm">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" value="johnmary@lga.com"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" value="123456"><br><br>
-        <input type="submit" value="Submit">
+    <h2>Password Change Form</h2>
+    <form id="passwordForm">
+        <label for="currentpassword">Current Password:</label><br>
+        <input type="password" id="currentpassword" name="currentpassword" required><br><br>
+
+        <label for="newpassword">New Password:</label><br>
+        <input type="password" id="newpassword" name="newpassword" required><br><br>
+
+        <button type="button" onclick="submitForm()">Submit</button>
     </form>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
+        function submitForm() {
+            const currentPassword = document.getElementById("currentpassword").value;
+            const newPassword = document.getElementById("newpassword").value;
+            const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTM4MjI4MzcsIm5iZiI6MTcxMzgyMjgzNywiZXhwIjoxNzEzODI2NDM3LCJkYXRhIjp7InVzZXJfaWQiOiIxIiwiY2xpZW50aWQiOiIxIiwidXNlcl9lbWFpbCI6ImpvaG5tYXJ5QGxnYS5jb20ifX0.mrXVtgMJplD0EY7F0eQB5fSIGGIbN_heTiYbptOky8U";
 
-            var formData = new FormData(this);
+            // Constructing the request object
+            const requestData = {
+                currentpassword: currentPassword,
+                newpassword: newPassword
+            };
 
-            // Construct the authorization header
-            var token = '1a3LM3W966D6QTJ5BJb9opunkUcw_d09NCOIJb9QZTsrneqOICoMoeYUDcd_NfaQyR787PAH98Vhue5g938jdkiyIZyJICytKlbjNBtebaHljIR6-zf3A2h3uy6pCtUFl1UhXWnV6madujY4_3SyUViRwBUOP-UudUL4wnJnKYUGDKsiZePPzBGrF4_gxJMRwF9lIWyUCHSh-PRGfvT7s1mu4-5ByYlFvGDQraP4ZiG5bC1TAKO_CnPyd1hrpdzBzNW4SfjqGKmz7IvLAHmRD-2AMQHpTU-hN2vwoA-iQxwQhfnqjM0nnwtZ0urE6HjKl6GWQW-KLnhtfw5n_84IRQ'; // Replace with your actual token
-            var headers = new Headers();
-            headers.append('Authorization', 'Bearer ' + token);
-
-            // Convert form data to JSON string
-            var jsonPayload = JSON.stringify(Object.fromEntries(formData));
-
-            fetch('https://test.rhm.backend.bespoque.ng/LOCALGOVT/auth/login.php', {
+            fetch('https://test.rhm.backend.bespoque.ng/LOCALGOVT/basic/user_password.php', {
                 method: 'POST',
-                headers: headers,
-                body: jsonPayload
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(requestData)
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Handle successful login response
-                console.log(data);
-            })
-            .catch(error => {
-                // Handle error
-                console.error('There was a problem with the fetch operation:', error);
-            });
-        });
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    // Handle success response here
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    // Handle error here
+                });
+        }
     </script>
 </body>
+
 </html>
