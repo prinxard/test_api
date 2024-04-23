@@ -44,9 +44,9 @@
                 // if (!response.ok) {
                 //     throw new Error('Failed to submit form');
                 // }
-                console.log("resonse", response);
+                console.log("API resonse", response);
                 const data = await response.json();
-                console.log('Success:', data);
+                console.log('json response:', data);
                 // Handle success response here
             } catch (error) {
                 console.error('Error:', error);
