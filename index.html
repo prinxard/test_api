@@ -4,35 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Change Form</title>
+    <title>API Test</title>
 </head>
 
 <body>
-    <h2>Password Change Form</h2>
+    <h2>API Test</h2>
     <form id="passwordForm">
-        <label for="currentpassword">Current Password:</label><br>
-        <input type="password" id="currentpassword" name="currentpassword" required><br><br>
+        <label for="role">role:</label><br>
+        <input type="password" id="role" name="role" required><br><br>
 
-        <label for="newpassword">New Password:</label><br>
-        <input type="password" id="newpassword" name="newpassword" required><br><br>
+        <label for="department">department:</label><br>
+        <input type="password" id="department" name="department" required><br><br>
 
         <button type="button" onclick="submitForm()">Submit</button>
     </form>
 
     <script>
         async function submitForm() {
-            const currentPassword = document.getElementById("currentpassword").value;
-            const newPassword = document.getElementById("newpassword").value;
+            const role = document.getElementById("role").value;
+            const department = document.getElementById("department").value;
             const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTM4NzU3MDcsIm5iZiI6MTcxMzg3NTcwNywiZXhwIjoxNzEzODc5MzA3LCJkYXRhIjp7InVzZXJfaWQiOiIxIiwiY2xpZW50aWQiOiIxIiwiZ3JvdXBpZCI6IjEiLCJ1c2VyX2VtYWlsIjoiam9obm1hcnlAbGdhLmNvbSJ9fQ.ey0q94y-TS30zFj3jojNdL59mZa3UCtsQtFXmhe73Kg";
 
             // Constructing the request object
             const requestData = {
-                currentpassword: currentPassword,
-                newpassword: newPassword
+                role: role,
+                department: department
             };
 
             try {
-                const response = await fetch('https://test.rhm.backend.bespoque.ng/LOCALGOVT/basic/user_password.php', {
+                const response = await fetch('https://test.rhm.backend.bespoque.ng/LOCALGOVT/administrator/GroupCreate.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
